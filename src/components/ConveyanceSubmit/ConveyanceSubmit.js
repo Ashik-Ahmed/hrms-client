@@ -6,7 +6,10 @@ const ConveyanceSubmit = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const onSubmit = () => {
+    const onSubmit = (data) => {
+
+
+
         console.log("Submitted");
     }
 
@@ -26,7 +29,7 @@ const ConveyanceSubmit = () => {
     return (
         <div>
 
-            <div class="hero min-h-screen bg-base-200">
+            <div class="hero min-h-screen bg-base-100">
                 <div class="hero-content flex-col lg:flex-row-reverse">
 
                     <div class="card flex-shrink-0  md:max-w-md shadow-2xl ">

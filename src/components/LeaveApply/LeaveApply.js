@@ -1,18 +1,55 @@
-import React from 'react';
+import { format } from 'date-fns';
+import { differenceInCalendarDays, parseISO } from 'date-fns/esm';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const LeaveApply = () => {
 
+    const loggedUser = JSON.parse(localStorage.getItem('current-user'));
+    console.log(loggedUser);
+
+    const [day, setDay] = useState(0);
+
     const { register, formState: { errors }, handleSubmit } = useForm();
+
+    const handledayCount = (e) => {
+        console.log(e.target.to.value)
+    }
 
     const onSubmit = async (data) => {
 
         const type = data.type;
-        const from = data.from;
-        const to = data.to;
+        const from = format(parseISO(data.from), 'dd/MM/yyyy');
+        // const from = parseISO(data.from);
+        const to = format(parseISO(data.to), 'dd/MM/yyyy');
         const total = data.total;
         const reliever = data.reliever;
         const reason = data.reason;
+
+        const application = {
+            empId: loggedUser._id,
+            type,
+            from,
+            to,
+            total,
+            reliever,
+            reason
+        }
+
+        // const result = differenceInCalendarDays(to, from);
+        // console.log(result);
+
+
+        // send leave application to server 
+        fetch('http://localhost:5000/leave-apply', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(application),
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
 
         console.log(type, from, to, total, reliever, reason)
     }
@@ -104,7 +141,7 @@ const LeaveApply = () => {
                                 <div className='text-left mb-2'>
                                     <label htmlFor="from">To</label>
                                     <div className='w-fit border rounded p-2  bg-base-200'>
-                                        <input className='bg-base-200' type="date" name="to" id="to"
+                                        <input onChange={handledayCount} className='bg-base-200' type="date" name="to" id="to"
                                             {...register('to', {
                                                 required: {
                                                     value: true,

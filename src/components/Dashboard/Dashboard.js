@@ -2,12 +2,13 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
+
     return (
         <div className='bg-base-200'>
 
             <div class="drawer drawer-mobile">
                 <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-                <div class="drawer-content flex flex-col items-center justify-center">
+                <div class="drawer-content flex flex-col items-center mt-8">
                     <label for="my-drawer-2" class="btn btn-primary mt-12 drawer-button lg:hidden">Dashboard</label>
 
                     <Outlet />
@@ -20,6 +21,8 @@ const Dashboard = () => {
                         <li><Link to='my-conveyance'>My Conveyance</Link></li>
                         <li><Link to='my-leave'>My Leave</Link></li>
                         <li><Link to='add-employee'>Add Employee</Link></li>
+                        <li><Link to='manage-employee'>Manage Employee</Link></li>
+                        <li><Link to='manage-leaves'>Manage Leaves</Link></li>
                     </ul>
 
                 </div>

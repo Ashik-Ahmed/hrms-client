@@ -1,70 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
-const AddEmployee = () => {
-
-    // const { register, resetField, formState: { errors, isDirty, isValid }, handleSubmit } = useForm({
-    //     mode: "onChange",
-    //     defaultValues: {
-    //         id: "",
-    //         name: "",
-    //         email: "",
-    //         designation: "",
-    //         role: "",
-    //         password: "",
-    //         confirmPassword: ""
-    //     }
-    // });
+const UpdateEmployee = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
-
 
     const onSubmit = async (data) => {
 
         const id = data.id;
         const name = data.name;
-        const email = data.email;
         const designation = data.designation;
         const role = data.role;
-        const password = data.password;
-        const confirmPassword = data.confirmPassword;
-
-        if (password !== confirmPassword) {
-            toast.error("Password didn't match");
-        }
-        else {
-
-            const newUser = {
-                employeeId: id,
-                name: name,
-                email: email,
-                designation: designation,
-                role: role,
-                password: password
-            }
-
-            fetch('http://localhost:5000/add-user', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(newUser),
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.insertedId) {
-                        toast.success('User Created Successfully')
-                    }
-                    if (data.message === "user already registered") {
-                        toast.warn('Email is registered already')
-                    }
-                    else {
-                        toast.error('Failed! \n Please try again')
-                    }
-                })
-
-        }
     }
 
     return (
@@ -74,6 +20,10 @@ const AddEmployee = () => {
                     <div class="card w-full shadow-2xl bg-base-100">
                         <div>
                             <h3 className='text-xl font-semibold text-secondary'>Employee Information</h3>
+                        </div>
+                        <div>
+                            <h4>Employee Name: { }</h4>
+                            <h4>Employee Email: { }</h4>
                         </div>
                         <div class="card-body">
                             <form onSubmit={handleSubmit(onSubmit)}>
@@ -115,28 +65,7 @@ const AddEmployee = () => {
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="form-control">
-                                            <label class="label">
-                                                <span class="label-text">Email</span>
-                                            </label>
-                                            <input type="email" name='email' placeholder="Email" class="input input-bordered"
-                                                {...register("email", {
-                                                    required: {
-                                                        value: true,
-                                                        message: 'Email is required',
-                                                    },
-                                                    pattern: {
-                                                        value: /\S+@\S+\.\S+/,
-                                                        message: 'Invalid Email'
-                                                    }
-                                                })}
-                                            />
-                                            <label class="label">
-                                                {errors.email?.type === 'required' && <span class="label-text-alt text-red-500">{errors.email.message}</span>}
-                                                {errors.email?.type === 'pattern' && <span class="label-text-alt text-red-500">{errors.email.message}</span>}
 
-                                            </label>
-                                        </div>
                                     </div>
                                     <div>
                                         <div className='flex gap-4'>
@@ -177,38 +106,6 @@ const AddEmployee = () => {
 
                                             </div>
                                         </div>
-                                        <div className='flex gap-4'>
-                                            <div class="form-control">
-                                                <label class="label">
-                                                    <span class="label-text">Password</span>
-                                                </label>
-                                                <input type="password" name='password' placeholder="Password" class="input input-bordered"
-
-                                                    {...register("password", {
-                                                        required: {
-                                                            value: true,
-                                                            message: 'Password is required',
-                                                        }
-                                                    })}
-                                                />
-                                                {errors.password?.type === 'required' && <span class="label-text-alt text-red-500">{errors.password.message}</span>}
-                                            </div>
-                                            <div class="form-control">
-                                                <label class="label">
-                                                    <span class="label-text">Confirm Password</span>
-                                                </label>
-                                                <input type="password" name='confirmPassword' placeholder="Confirm Password" class="input input-bordered"
-                                                    {...register("confirmPassword", {
-                                                        required: {
-                                                            value: true,
-                                                            message: 'Confirm Password is required',
-                                                        }
-                                                    })}
-                                                />
-                                                {errors.confirmPassword?.type === 'required' && <span class="label-text-alt text-red-500">{errors.confirmPassword.message}</span>}
-
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-control mt-6">
@@ -223,4 +120,4 @@ const AddEmployee = () => {
     );
 };
 
-export default AddEmployee;
+export default UpdateEmployee;

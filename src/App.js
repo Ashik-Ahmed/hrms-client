@@ -11,6 +11,10 @@ import AddEmployee from './components/Dashboard/AddEmployee/AddEmployee';
 import MyProfile from './components/Dashboard/MyProfile/MyProfile';
 import MyConveyance from './components/Dashboard/MyConveyance/MyConveyance';
 import MyLeave from './components/Dashboard/MyLeave/MyLeave';
+import ManageEmployee from './components/Dashboard/ManageEmployee/ManageEmployee';
+import ManageLeaves from './components/Dashboard/ManageLeaves/ManageLeaves';
+import Signup from './components/Login/Signup';
+import UpdateEmployee from './components/Dashboard/UpdateEmployee/UpdateEmployee';
 
 function App() {
   return (
@@ -22,12 +26,15 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />}>
 
           <Route index element={<MyProfile />}></Route>
-          <Route path='add-employee' element={<AddEmployee />}></Route>
+          <Route path='update-employee' element={<UpdateEmployee />}></Route>
+          <Route path='manage-employee' element={<ManageEmployee />}></Route>
+          <Route path='manage-leaves' element={<ManageLeaves />}></Route>
           <Route path='my-conveyance' element={<MyConveyance />}></Route>
           <Route path='my-leave' element={<MyLeave />}></Route>
 
         </Route>
         <Route path='/login' element={<Login />}></Route>
+        <Route path='/signup' element={<Signup />}></Route>
       </Routes>
 
       <ToastContainer />
