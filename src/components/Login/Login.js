@@ -55,11 +55,11 @@ const Login = () => {
         <div>
             <div class="hero min-h-screen">
                 <div class="hero-content flex-col lg:flex-row-reverse justify-center mx-auto">
-                    <div class="text-center hidden md:block w-2/5 lg:text-left">
+                    {/* <div class="text-center hidden md:block w-2/5 lg:text-left">
 
                         <img className='-ml-36' src={login} alt="" />
-                    </div>
-                    <div className='w-full md:w-2/5'>
+                    </div> */}
+                    <div className='w-full'>
                         <div className='text-center'>
                             <h3 className='text-5xl font-bold text-primary mb-4'>Please Login</h3>
                         </div>

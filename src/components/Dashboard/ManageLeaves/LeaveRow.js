@@ -1,10 +1,13 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 import useUser from '../../../Hooks/useUser';
 import Loading from '../../Shared/Loading';
 
 const LeaveRow = ({ leave, serial }) => {
 
-    const [user] = useUser(leave.empId);
+
+    const [user] = useUser(leave.userEmail);
 
     if (!user) {
         return <Loading />
@@ -22,7 +25,8 @@ const LeaveRow = ({ leave, serial }) => {
             <td>
                 <div className='flex gap-4'>
                     <button className='btn btn-accent btn-sm'>Approve</button>
-                    <button className='btn btn-error btn-sm'>Reject</button>
+                    <button className='btn btn-warning btn-sm'>Reject</button>
+                    <button className='btn btn-error btn-sm'>Delete</button>
                 </div>
             </td>
         </tr>

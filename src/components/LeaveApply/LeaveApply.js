@@ -1,13 +1,16 @@
 import { format } from 'date-fns';
 import { differenceInCalendarDays, parseISO } from 'date-fns/esm';
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import auth from '../../firebase.init';
 
 const LeaveApply = () => {
 
-    const loggedUser = JSON.parse(localStorage.getItem('current-user'));
-    console.log(loggedUser);
+    // const [modal, setModal] = useState(false);
 
+    const [user] = useAuthState(auth);
     const [day, setDay] = useState(0);
 
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -18,6 +21,8 @@ const LeaveApply = () => {
 
     const onSubmit = async (data) => {
 
+        console.log("Clicked")
+
         const type = data.type;
         const from = format(parseISO(data.from), 'dd/MM/yyyy');
         // const from = parseISO(data.from);
@@ -27,7 +32,7 @@ const LeaveApply = () => {
         const reason = data.reason;
 
         const application = {
-            empId: loggedUser._id,
+            userEmail: user.email,
             type,
             from,
             to,
@@ -49,7 +54,12 @@ const LeaveApply = () => {
             body: JSON.stringify(application),
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                if (data.acknowledged) {
+                    toast.success("Leave application submitted successfully")
+                }
+                console.log(data)
+            })
 
         console.log(type, from, to, total, reliever, reason)
     }
@@ -202,14 +212,29 @@ const LeaveApply = () => {
                                 </label>
                                 <input type="file" name='attachment' placeholder="Type here" class="input input-bordered w-full max-w-xs" />
                             </div>
-
-
                         </div>
                     </div>
                     <div class="form-control mt-10 w-1/4 mx-auto">
-                        <button class="btn btn-primary">Apply</button>
+                        <button class="btn btn-primary px-4">Apply</button>
                     </div>
                 </form>
+
+                {/* {
+                    modal &&
+                    <div>
+                        <input type="checkbox" id="leave-apply-modal" class="modal-toggle" />
+                        <div class="modal modal-bottom sm:modal-middle">
+                            <div class="modal-box">
+                                <h3 class="font-bold text-lg">Successfully Placed your leave application</h3>
+
+                                <div class="modal-action">
+                                    <label for="leave-apply-modal" class="btn">Close</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                } */}
+
             </div>
         </div>
     );

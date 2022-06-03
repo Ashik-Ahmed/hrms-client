@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
 import Loading from '../../Shared/Loading';
 import EmployeeDeleteModal from './EmployeeDeleteModal';
 import EmployeeRow from './EmployeeRow';
+import EmployeeUpdateModal from './EmployeeUpdateModal';
 
 const ManageEmployee = () => {
 
     const [modal, setModal] = useState(false)
+    const [updateModal, setUpdateModal] = useState(false)
+
 
 
     const { data: users, isLoading, refetch } = useQuery('users', () => fetch('http://localhost:5000/users', {
@@ -29,9 +31,12 @@ const ManageEmployee = () => {
             }
         })
             .then(res => res.json())
-            .then(data => console.log(data))
-        console.log('Delete')
+            .then(data => {
+                console.log(data);
+                refetch();
+            })
     }
+
 
     if (isLoading) {
         return <Loading />
@@ -53,11 +58,14 @@ const ManageEmployee = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map(user => <EmployeeRow key={user._id} user={user} setModal={setModal}></EmployeeRow>)
+                            users.map(user => <EmployeeRow key={user._id} user={user} setModal={setModal} setUpdateModal={setUpdateModal}></EmployeeRow>)
                         }
 
                         {
                             modal && <EmployeeDeleteModal user={modal} handleUserDelete={handleUserDelete}></EmployeeDeleteModal>
+                        }
+                        {
+                            updateModal && <EmployeeUpdateModal user={updateModal} setUpdateModal={setUpdateModal}></EmployeeUpdateModal>
                         }
                     </tbody>
                 </table>

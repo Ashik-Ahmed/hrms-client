@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-const useUser = (id) => {
+const useUser = (email) => {
     const [user, setUser] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/user/${id}`, {
+        fetch(`http://localhost:5000/user/${email}`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
@@ -12,7 +12,7 @@ const useUser = (id) => {
         })
             .then(res => res.json())
             .then(data => setUser(data))
-    }, [id])
+    }, [email])
 
     return [user, setUser];
 }
